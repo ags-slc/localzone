@@ -48,7 +48,7 @@ Installing localzone
 Raison d'être
 -------------
 
-Comprehensive, low-level DNS toolkits can be cumbersome for the more common zone management tasks, especially those related to making simple changes to zone records. They can also come with a steep learning curve. Enter localzone: a simple library for managing DNS zones. While `localzone` may be a low-calorie library, it's stuffed full of everything that a hungry hostmaster needs.
+Comprehensive, low-level DNS toolkits can be cumbersome for the more common zone management tasks--especially those related to making simple changes to zone records. They can also come with a steep learning curve. Enter localzone: a simple library for managing DNS zones. While `localzone` may be a low-calorie library, it's stuffed full of everything that a hungry hostmaster needs.
 
 
 License
