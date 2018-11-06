@@ -48,8 +48,7 @@ def load(filename, origin=None):
     :return: :class:`Zone <Zone>` object
     :rtype: localzone.Zone
     """
-    opts = "rU"
-    with open(filename, opts) as text:
+    with open(filename) as text:
         tok = dns.tokenizer.Tokenizer(text, filename)
         reader = dns.zone._MasterReader(
             tok,
