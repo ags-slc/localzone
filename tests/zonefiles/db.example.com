@@ -15,4 +15,4 @@ wwwtest       IN  CNAME www                   ; wwwtest.example.com is another a
 mail          IN  A     192.0.2.3             ; IPv4 address for mail.example.com
 mail2         IN  A     192.0.2.4             ; IPv4 address for mail2.example.com
 mail3         IN  A     192.0.2.5             ; IPv4 address for mail3.example.com
-@				      IN  TXT   "v=spf1 mx ~all"      ; SPFv1 record for example.com
+@             IN  TXT   "v=spf1 mx ~all"      ; SPFv1 record for example.com
