@@ -1,4 +1,4 @@
-VERSION = (0, 9, 2)
+VERSION = (0, 9, 3)
 
 __title__ = "localzone"
 __description__ = "A simple library for managing DNS zones."
