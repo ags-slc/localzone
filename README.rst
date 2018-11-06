@@ -1,11 +1,3 @@
-.. image:: https://localzone.iomaestro.com/_images/localzone.png
-    :width: 100px
-    :align: center
-    :height: 100px
-    :alt: Project link: localzone (calzone image by sobinsergey from the Noun Project)
-    :target: https://localzone.iomaestro.com
-
-
 A low-calorie library for managing DNS zones
 ============================================
 
