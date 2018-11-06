@@ -47,7 +47,7 @@ def checksum(word, size=32):
     :param word: The data to checksum.
     :type word: string
     :param size: The checksum's size.
-    :type sizw: int
+    :type size: int
     :return: Fletcher's checksum represented as a hexadecimal digest.
     :rtype: string
     """
@@ -74,4 +74,4 @@ def checksum(word, size=32):
     a %= modulus
     b %= modulus
 
-    return hex((b << bits) | a)[2:].zfill(4)
+    return format((b << bits) | a, "x").zfill(4)

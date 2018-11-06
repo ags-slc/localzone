@@ -17,7 +17,7 @@ DESCRIPTION = "A simple library for managing DNS zones."
 URL = None
 EMAIL = "ags@iomaestro.com"
 AUTHOR = "Andrew Grant Spencer"
-REQUIRES_PYTHON = ">=3.4.0"
+REQUIRES_PYTHON = ">=2.7.0"
 VERSION = None
 
 # What packages are required for this module to be executed?
@@ -116,14 +116,21 @@ setup(
     classifiers=[
         # Trove classifiers
         # Full list: https://pypi.python.org/pypi?%3Aaction=list_classifiers
+        "Development Status :: 4 - Beta",
         "License :: OSI Approved :: BSD License",
+        "Intended Audience :: Developers",
+        "Intended Audience :: System Administrators",
         "Programming Language :: Python",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.7",
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.4",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: Implementation :: CPython",
         "Programming Language :: Python :: Implementation :: PyPy",
+        "Topic :: Internet :: Name Service (DNS)",
+        "Topic :: Software Development :: Libraries :: Python Modules",
     ],
     # $ setup.py publish support.
     cmdclass={"upload": UploadCommand},
