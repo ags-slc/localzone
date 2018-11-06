@@ -1,3 +1,4 @@
+
 A low-calorie library for managing DNS zones
 ============================================
 
@@ -42,7 +43,6 @@ License
 -------
 
 - BSD
-- Calzone image by sobinsergey from the Noun Project
 
 
 Where did the calories go? The likely `suspect <https://www.traegergrills.com/recipes/pork/meat-lovers-calzone-smoked-marinara>`_.
