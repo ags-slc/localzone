@@ -10,12 +10,12 @@ This module contains the primary objects that power localzone.
 
 from collections import namedtuple
 from time import strftime, localtime, time
-from .util import group, pack, checksum
 from dns.zone import Zone as DNSZone
 import dns.name
 import dns.rdata
 import dns.rdataclass
 import dns.rdatatype
+from .util import checksum
 
 
 class Zone(DNSZone):

@@ -9,10 +9,10 @@ This module implements the methods for localzone context management.
 """
 
 from contextlib import contextmanager
-from .models import Zone
 import dns.rdataclass
 import dns.tokenizer
 import dns.zone
+from .models import Zone
 
 
 @contextmanager
