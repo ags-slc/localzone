@@ -76,15 +76,19 @@ class Zone(DNSZone):
 
     def get_record(self, hashid):
         """
-        Get a resource record via ID.
+        Get a resource record via ID. If no record is found, raise a `KeyError`.
 
         :param hashid: The record's ID.
         :type hashid: string
         :return: :class:`Record <Record>` object
         :rtype: localzone.models.Record
         """
-        # TODO: implement error handling (KeyError, ValueError)
-        return next((r for r in self.records if r.hashid == hashid), None)
+        record = next((r for r in self.records if r.hashid == hashid), None)
+
+        if not record:
+            raise KeyError("The supplied hashid was not found in the zone")
+
+        return record
 
     def get_records(self, rdtype):
         """
@@ -197,9 +201,12 @@ class Zone(DNSZone):
 
     def remove_record(self, hashid, cascade=True):
         """
-        Remove a resource record from the zone.
-        If the record does not exist in the zone, a ValueError will be thrown.
-        If the node/set do not exist in the zone, a KeyError will be thrown.
+        Remove a resource record from the zone. A `KeyError` is raised by the
+        `get_record()` method if the supplied `hashid` is not found in the zone.
+
+        If `cascade` is `True` and the`rdataset` is empty after removing the
+        record, the `rdataset` is also removed. If the `node` only contains the
+        empty `rdataset`, then the `node` is removed.
 
         :param hashid: The record's ID.
         :type hashid: string
@@ -214,25 +221,24 @@ class Zone(DNSZone):
         rdataset.remove(rdata)
 
         if cascade:
-            if len(rdataset) == 0 and len(node) == 1:
+            if not rdataset and len(node) == 1:
+                # the node contains only an empty rdataset; remove
                 self.delete_node(record.name)
-            elif len(rdataset) == 0:
+            elif not rdataset:
+                # the node contains other rdatasets; only remove empty set
                 self.delete_rdataset(record.name, record.rdtype)
 
     def update_record(self, hashid, content):
         """
-        Remove a resource record from the zone.
-        If the record does not exist in the zone, a ValueError will be thrown.
-        If the node/set do not exist in the zone, a KeyError will be thrown.
+        Update the content of a resource record. A `KeyError` is raised by the
+        `get_record()` method if the supplied `hashid` is not found in the zone.
 
         :param hashid: The record's ID.
         :type hashid: string
         :param content: The new content of the record.
         :type content: string
         """
-        # TODO: implement better error handling
         record = self.get_record(hashid)
-
         self.remove_record(hashid, cascade=False)
         return self.add_record(record.name, record.rdtype, content)
 

@@ -1,3 +1,4 @@
+from dns.rdatatype import UnknownRdatatype
 import pytest
 import localzone
 
@@ -23,6 +24,12 @@ def test_get_record():
     assert record.rdtype == "A"
     assert record.content == "192.0.2.1"
     assert record.ttl == 3600
+
+
+def test_get_record_not_found():
+    z = localzone.load(ZONEFILE, ORIGIN)
+    with pytest.raises(KeyError):
+        z.get_record("deadbeef")
 
 
 def test_find_records_by_type():
@@ -62,11 +69,29 @@ def test_zone_add_record():
         assert record.hashid == "28c9e108"
 
 
+def test_zone_add_record_unknown_type():
+    with localzone.manage(ZONEFILE, ORIGIN) as z:
+        with pytest.raises(UnknownRdatatype):
+            z.add_record("test", "err", "testing")
+
+
+def test_zone_add_record_no_content():
+    with localzone.manage(ZONEFILE, ORIGIN) as z:
+        with pytest.raises(AttributeError):
+            z.add_record("test", "txt", None)
+
+
 def test_zone_remove_record():
     with localzone.manage(ZONEFILE, ORIGIN) as z:
         z.remove_record(HASHID)
-        record = z.get_record(HASHID)
-        assert record is None
+        with pytest.raises(KeyError):
+            z.get_record(HASHID)
+
+
+def test_zone_remove_record_not_found():
+    with localzone.manage(ZONEFILE, ORIGIN) as z:
+        with pytest.raises(KeyError):
+            z.remove_record("deadbeef")
 
 
 def test_zone_update_record():
@@ -77,6 +102,12 @@ def test_zone_update_record():
         assert record.rdtype == "A"
         assert record.content == "192.0.2.100"
         assert record.ttl == 3600
+
+
+def test_zone_update_record_not_found():
+    with localzone.manage(ZONEFILE, ORIGIN) as z:
+        with pytest.raises(KeyError):
+            z.update_record("deadbeef", "eat mor chikin")
 
 
 def test_zone_save():
