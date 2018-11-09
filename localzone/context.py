@@ -9,6 +9,7 @@ This module implements the methods for localzone context management.
 """
 
 from contextlib import contextmanager
+import dns.name
 import dns.rdataclass
 import dns.tokenizer
 import dns.zone
@@ -30,11 +31,17 @@ def manage(filename, origin=None, autosave=False):
     :return: :class:`Zone <Zone>` object
     :rtype: localzone.models.Zone
     """
-    # TODO: verify origin has full stop
+    if origin:
+        # perform basic validation/sanitization on origin
+        origin = dns.name.from_text(origin).to_text()
+
     zone = load(filename, origin)
-    yield zone
-    if autosave:
-        zone.save()
+
+    try:
+        yield zone
+    finally:
+        if autosave:
+            zone.save()
 
 
 def load(filename, origin=None):
