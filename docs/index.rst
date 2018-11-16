@@ -3,12 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-.. image:: _static/localzone.png
-    :width: 100px
-    :align: center
-    :height: 100px
-    :alt: Project link: localzone (calzone image by sobinsergey from the Noun Project)
-    :target: https://localzone.iomaestro.com
+
+.. include:: logo.rst
 
 
 A low-calorie library for managing DNS zones
@@ -67,9 +63,11 @@ Indices and tables
 
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+   :caption: Documentation:
+   :hidden:
 
    modules
+   changelog
 
 
 Where did the calories go? The likely `suspect <https://www.traegergrills.com/recipes/pork/meat-lovers-calzone-smoked-marinara>`_.
