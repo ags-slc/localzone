@@ -67,8 +67,15 @@ def load(filename, origin=None):
             check_origin=True,
         )
         reader.read()
+
         # TODO: remember that any method using the zone.filename property should
         # have it passed as a parameter
         reader.zone._filename = filename
-        reader.zone._ttl = reader.ttl
+
+        # starting with dnspython v1.16.0, use default_ttl
+        try:
+            reader.zone._ttl = reader.default_ttl
+        except AttributeError:
+            reader.zone._ttl = reader.ttl
+
         return reader.zone
