@@ -49,7 +49,11 @@ class Zone(DNSZone):
         # record is released. Probably not a big deal, as there is really no
         # reason to hold the record given the existence of the soa property.
         # Should this implementation be reconsidered?
-        self.soa.rdata.serial = next_serial
+        try:
+            self.soa.rdata.serial = next_serial
+        except TypeError:
+            content = self.soa.rdata.replace(serial=next_serial).to_text()
+            self.update_record(self.soa.hashid, content)
 
     def save(self, filename=None, autoserial=True):
         """
