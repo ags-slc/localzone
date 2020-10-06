@@ -1,3 +1,7 @@
+v0.9.7
+------
+- Support dnspython 2.
+
 v0.9.6
 ------
 - Minor documentation change for PyPI.
