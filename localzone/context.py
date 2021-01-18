@@ -13,6 +13,14 @@ import dns.name
 import dns.rdataclass
 import dns.tokenizer
 import dns.zone
+try:
+    # The api for the zonefile reader was exposed in dnspython 2.1
+    from dns.zonefile import Reader
+    DNSPYTHON21 = True
+except ImportError:
+    from dns.zone import _MasterReader
+    DNSPYTHON21 = False
+
 from .models import Zone
 
 
@@ -57,25 +65,42 @@ def load(filename, origin=None):
     """
     with open(filename) as text:
         tok = dns.tokenizer.Tokenizer(text, filename)
-        reader = dns.zone._MasterReader(
-            tok,
-            origin=origin,
-            rdclass=dns.rdataclass.IN,
-            relativize=True,
-            zone_factory=Zone,
-            allow_include=True,
-            check_origin=True,
-        )
-        reader.read()
+        if DNSPYTHON21:
+            zone = Zone(
+                origin,
+                dns.rdataclass.IN,
+                relativize=True,
+                )
+            with zone.writer() as txn:
+                reader = Reader(
+                    tok,
+                    rdclass=dns.rdataclass.IN,
+                    txn=txn,
+                    allow_include=True,
+                )
+                reader.read()
+        else:
+            reader = _MasterReader(
+                tok,
+                origin=origin,
+                rdclass=dns.rdataclass.IN,
+                relativize=True,
+                zone_factory=Zone,
+                allow_include=True,
+                check_origin=True,
+            )
+            reader.read()
+            zone = reader.zone
 
-        # TODO: remember that any method using the zone.filename property should
-        # have it passed as a parameter
-        reader.zone._filename = filename
+    # TODO: remember that any method using the zone.filename property should
+    # have it passed as a parameter
+    zone._filename = filename
 
-        # starting with dnspython v1.16.0, use default_ttl
-        try:
-            reader.zone._ttl = reader.default_ttl
-        except AttributeError:
-            reader.zone._ttl = reader.ttl
+    # starting with dnspython v1.16.0, use default_ttl
+    try:
+        zone._ttl = reader.default_ttl
+    except AttributeError:
+        zone._ttl = reader.ttl
 
-        return reader.zone
+    return zone
+
