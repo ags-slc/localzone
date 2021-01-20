@@ -1,3 +1,7 @@
+v0.9.8
+------
+- Support dnspython 2.1.
+
 v0.9.7
 ------
 - Support dnspython 2.
