@@ -1,4 +1,5 @@
 from dns.rdatatype import UnknownRdatatype
+from dns.exception import SyntaxError as DNSSyntaxError
 import pytest
 import localzone
 
@@ -77,7 +78,7 @@ def test_zone_add_record_unknown_type():
 
 def test_zone_add_record_no_content():
     with localzone.manage(ZONEFILE, ORIGIN) as z:
-        with pytest.raises(AttributeError):
+        with pytest.raises((AttributeError, DNSSyntaxError)):
             z.add_record("test", "txt", None)
 
 

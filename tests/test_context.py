@@ -1,6 +1,9 @@
 import pytest
 import localzone
-from dns.zone import UnknownOrigin
+try:
+    from dns.zonefile import UnknownOrigin
+except ImportError:
+    from dns.zone import UnknownOrigin
 
 ZONEFILE = "tests/zonefiles/db.example.com"
 ORIGIN = "example.com."
