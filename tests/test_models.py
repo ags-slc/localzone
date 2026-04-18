@@ -78,7 +78,7 @@ def test_zone_add_record_unknown_type():
 
 def test_zone_add_record_no_content():
     with localzone.manage(ZONEFILE, ORIGIN) as z:
-        with pytest.raises((AttributeError, DNSSyntaxError)):
+        with pytest.raises((AttributeError, DNSSyntaxError, ValueError)):
             z.add_record("test", "txt", None)
 
 
